@@ -12,5 +12,11 @@ const LINE =
 
 const OUTPUT_PATH = "/output/entry.txt";
 
+// The gate requires 1–200 characters of non-whitespace UTF-8 text; refuse
+// to write anything that would fail it instead of submitting a bad entry.
+if (LINE.length < 1 || LINE.length > 200 || LINE.trim().length === 0) {
+  throw new Error(`pickup line fails the gate: ${LINE.length} characters`);
+}
+
 mkdirSync("/output", { recursive: true });
 writeFileSync(OUTPUT_PATH, LINE, "utf8");
